@@ -40,32 +40,9 @@ Professional development environment with Niri compositor and Noctalia shell.
 
 ## Quick Start
 
-### First Installation
+Xem file `INSTALL.md` để biết cách cài đặt.
 
-```bash
-# Clone this repo
-git clone <repo-url> ~/workspace/nix_river
-cd ~/workspace/nix_river
-
-# Update flake lock
-nix flake update
-
-# Install NixOS (from live ISO)
-sudo nixos-install --flake .#nixos
-
-# Or rebuild existing system
-sudo nixos-rebuild switch --flake .#nixos
-```
-
-### Daily Usage
-
-```bash
-# Rebuild system
-rebuild  # alias for: sudo nixos-rebuild switch --flake ~/workspace/nix_river#nixos
-
-# Update everything
-update   # alias for: nix flake update && rebuild
-```
+Login: **river** / **nixos**
 
 ## Customization
 
@@ -119,7 +96,7 @@ imports = [
 - **User**: river
 - **Locale**: Asia/Ho_Chi_Minh
 - **Kernel**: Latest (for Wayland)
-- **Display Manager**: SDDM (Wayland)
+- **Display Manager**: greetd + tuigreet (simple & stable)
 - **Desktop**: Niri + Noctalia
 
 ## Key Bindings (Niri)
