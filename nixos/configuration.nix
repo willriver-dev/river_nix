@@ -62,8 +62,13 @@
       max-jobs = "auto";
       cores = 0;  # Use all available cores
       
-      # Binary cache optimization
+      # Binary cache optimization with China mirrors
       substituters = [
+        # China mirrors (check first for faster downloads in CN)
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+        "https://mirrors.ustc.edu.cn/nix-channels/store"
+        
+        # Official caches (fallback)
         "https://cache.nixos.org"
         "https://niri.cachix.org"  # Niri binary cache
       ];
