@@ -1,0 +1,34 @@
+===========================================
+NixOS Config - Gọn & Đơn Giản
+===========================================
+✅ ĐÃ FIX:
+- Thay SDDM → greetd+tuigreet (đơn giản, không lỗi)
+- Xóa hết docs dài dòng
+- Chỉ giữ lại: README.md, INSTALL.md
+📁 CẤU TRÚC:
+├── flake.nix              # Config chính
+├── nixos/
+│   └── configuration.nix  # System config
+└── home/                  # User config
+    ├── niri.nix          # Niri compositor
+    ├── noctalia.nix      # Desktop shell
+    └── ...
+🚀 CÀI ĐẶT:
+1. Đọc INSTALL.md
+2. Chạy 3 bước trong đó
+3. Xong!
+🔑 LOGIN:
+Username: river
+Password: nixos (đổi ngay: passwd)
+🎨 DISPLAY MANAGER:
+greetd + tuigreet
+- Text-based, simple
+- Không bao giờ lỗi graphics
+- Native Wayland
+📦 BAO GỒM:
+- Niri compositor
+- Noctalia shell
+- Dev tools: Go, Python, Node, Docker
+- CLI tools: fzf, ripgrep, bat, eza
+- Editors: Helix, Vim, VSCode
+===========================================

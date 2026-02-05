@@ -96,10 +96,15 @@
   # Niri compositor configured via home-manager (home/niri.nix)
   # programs.niri.enable = true;  # ← Moved to home-manager
   
-  # Display Manager - SDDM with Wayland support
-  services.displayManager.sddm = {
+  # Display Manager - greetd with tuigreet (simple & stable for Wayland)
+  services.greetd = {
     enable = true;
-    wayland.enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
+        user = "greeter";
+      };
+    };
   };
   
   # XDG Desktop Portal (for screensharing, file picker, etc.)
