@@ -93,8 +93,8 @@
   # DESKTOP ENVIRONMENT - NIRI
   # ============================================================================
   
-  # Niri compositor
-  programs.niri.enable = true;
+  # Niri compositor configured via home-manager (home/niri.nix)
+  # programs.niri.enable = true;  # ← Moved to home-manager
   
   # Display Manager - SDDM with Wayland support
   services.displayManager.sddm = {

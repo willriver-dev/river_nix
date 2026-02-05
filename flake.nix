@@ -51,9 +51,6 @@
         ./nixos/configuration.nix
         ./nixos/hardware-configuration.nix
         
-        # Niri module
-        niri.nixosModules.niri
-        
         # Home Manager integration
         home-manager.nixosModules.home-manager
         {
