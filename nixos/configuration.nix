@@ -163,15 +163,15 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      # Nerd Fonts for terminal & coding
-      (nerdfonts.override { 
-        fonts = [ "FiraCode" "JetBrainsMono" "Iosevka" ]; 
-      })
+      # Nerd Fonts for terminal & coding (NixOS 25.11 syntax)
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.iosevka
       
       # System fonts
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       
       # Additional
       liberation_ttf

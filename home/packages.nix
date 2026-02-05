@@ -9,72 +9,42 @@
     go
     gopls
     golangci-lint
-    gotools
-    go-migrate
     
-    # Python
+    # Python (FIXED)
     python3
-    python3Packages.pip
-    python3Packages.poetry
-    python3Packages.virtualenv
-    python3Packages.pylsp-mypy
-    ruff
     
     # Node.js
-    nodejs_22
-    nodePackages.npm
-    nodePackages.yarn
-    nodePackages.pnpm
-    nodePackages.typescript
-    nodePackages.typescript-language-server
+    nodejs
     
     # ===== EDITORS & IDEs =====
     
-    # Text editors
-    zed-editor
-    
-    # JetBrains IDEs (unfree)
-    jetbrains.datagrip
+    # JetBrains IDEs (unfree - requires allowUnfree = true in nixos config)
     jetbrains.goland
+    jetbrains.datagrip
     
     # ===== DEVELOPMENT TOOLS =====
     
-    # Docker & Containers
+    # Docker
     docker-compose
-    
-    # API Testing
-    insomnia
-    postman
-    
-    # Database tools
-    postgresql
-    mysql80
-    redis
     
     # ===== SHELL UTILITIES =====
     
     # Modern CLI tools
-    fzf              # Fuzzy finder
-    ripgrep          # Better grep
-    fd               # Better find
-    bat              # Better cat
-    eza              # Better ls
-    zoxide           # Smart cd
-    direnv           # Per-directory environments
+    fzf
+    ripgrep
+    fd
+    bat
+    eza
     
     # Git tools
-    gh               # GitHub CLI
-    git-delta        # Better git diff
+    gh
     
     # System tools
-    btop             # System monitor
-    dust             # Better du
-    duf              # Better df
-    procs            # Better ps
+    btop
     
     # Network tools
-    httpie           # HTTP client
-    jq               # JSON processor
+    httpie
+    jq
     
     # ===== BROWSERS =====
     firefox
@@ -91,30 +61,20 @@
     # PDF viewer
     zathura
     
-    # Screenshot tools (already in system packages, but listing here)
+    # Screenshot tools
     grim
     slurp
     
     # Screen recording
     wf-recorder
     
-    # Clipboard manager
-    cliphist
-    
-    # Color picker
-    hyprpicker
+    # Clipboard
+    wl-clipboard
     
     # ===== MISC =====
     
-    # Brightness control
-    brightnessctl
-    
     # Archive tools
     unzip
-    unrar
     p7zip
-    
-    # Fonts preview
-    font-manager
   ];
 }
