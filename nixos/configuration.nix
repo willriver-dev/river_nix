@@ -36,20 +36,7 @@
   
   time.timeZone = "Asia/Ho_Chi_Minh";
   
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "vi_VN.UTF-8";
-      LC_IDENTIFICATION = "vi_VN.UTF-8";
-      LC_MEASUREMENT = "vi_VN.UTF-8";
-      LC_MONETARY = "vi_VN.UTF-8";
-      LC_NAME = "vi_VN.UTF-8";
-      LC_NUMERIC = "vi_VN.UTF-8";
-      LC_PAPER = "vi_VN.UTF-8";
-      LC_TELEPHONE = "vi_VN.UTF-8";
-      LC_TIME = "vi_VN.UTF-8";
-    };
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # ============================================================================
   # NIX SETTINGS
@@ -117,6 +104,9 @@
     wlr.enable = true;
   };
 
+  # XWayland support (required for JetBrains tools)
+  programs.xwayland.enable = true;
+
   # ============================================================================
   # HARDWARE & SERVICES
   # ============================================================================
@@ -172,7 +162,7 @@
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
       nerd-fonts.iosevka
-      
+      nerd-fonts.lilex
       # System fonts
       noto-fonts
       noto-fonts-cjk-sans
@@ -186,7 +176,7 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        monospace = [ "Lilex Nerd Font" ];
         sansSerif = [ "Noto Sans" ];
         serif = [ "Noto Serif" ];
         emoji = [ "Noto Color Emoji" ];
@@ -207,7 +197,8 @@
     wayland
     wayland-utils
     wl-clipboard
-    
+    xwayland-satellite  # XWayland support for JetBrains tools
+
     # Build tools
     gcc
     gnumake

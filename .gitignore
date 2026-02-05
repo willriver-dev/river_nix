@@ -1,0 +1,13 @@
+# IDE
+.idea/
+.vscode/
+
+# Hardware config (specific to each machine)
+nixos/hardware-configuration.nix
+
+# Build results
+result
+result-*
+
+# Nix
+.direnv/
