@@ -36,38 +36,25 @@
   
   time.timeZone = "Asia/Ho_Chi_Minh";
   
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "vi_VN.UTF-8";
-      LC_IDENTIFICATION = "vi_VN.UTF-8";
-      LC_MEASUREMENT = "vi_VN.UTF-8";
-      LC_MONETARY = "vi_VN.UTF-8";
-      LC_NAME = "vi_VN.UTF-8";
-      LC_NUMERIC = "vi_VN.UTF-8";
-      LC_PAPER = "vi_VN.UTF-8";
-      LC_TELEPHONE = "vi_VN.UTF-8";
-      LC_TIME = "vi_VN.UTF-8";
-    };
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # ============================================================================
   # NIX SETTINGS
   # ============================================================================
-  
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       max-jobs = "auto";
       cores = 0;  # Use all available cores
-      
+
       # Binary cache optimization with China mirrors
       substituters = [
         # China mirrors (check first for faster downloads in CN)
         "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
         "https://mirrors.ustc.edu.cn/nix-channels/store"
-        
+
         # Official caches (fallback)
         "https://cache.nixos.org"
         "https://niri.cachix.org"  # Niri binary cache
@@ -77,7 +64,7 @@
         "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
     };
-    
+
     # Garbage collection
     gc = {
       automatic = true;
@@ -92,10 +79,10 @@
   # ============================================================================
   # DESKTOP ENVIRONMENT - NIRI
   # ============================================================================
-  
+
   # Niri compositor configured via home-manager (home/niri.nix)
   # programs.niri.enable = true;  # ← Moved to home-manager
-  
+
   # Display Manager - greetd with tuigreet (simple & stable for Wayland)
   services.greetd = {
     enable = true;
@@ -106,7 +93,7 @@
       };
     };
   };
-  
+
   # XDG Desktop Portal (for screensharing, file picker, etc.)
   xdg.portal = {
     enable = true;
@@ -117,10 +104,13 @@
     wlr.enable = true;
   };
 
+  # XWayland support (required for JetBrains tools)
+  programs.xwayland.enable = true;
+
   # ============================================================================
   # HARDWARE & SERVICES
   # ============================================================================
-  
+
   # Audio - PipeWire
   services.pipewire = {
     enable = true;
@@ -129,19 +119,19 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  
+
   # Bluetooth (required by Noctalia)
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
   };
-  
+
   # Power management (required by Noctalia)
   services.power-profiles-daemon.enable = true;
-  
+
   # UPower for battery info (required by Noctalia)
   services.upower.enable = true;
-  
+
   # Graphics
   hardware.graphics = {
     enable = true;
@@ -151,7 +141,7 @@
   # ============================================================================
   # VIRTUALIZATION - DOCKER
   # ============================================================================
-  
+
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
@@ -164,7 +154,7 @@
   # ============================================================================
   # FONTS
   # ============================================================================
-  
+
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -172,21 +162,21 @@
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
       nerd-fonts.iosevka
-      
+      nerd-fonts.lilex
       # System fonts
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      
+
       # Additional
       liberation_ttf
       dejavu_fonts
     ];
-    
+
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        monospace = [ "Lilex Nerd Font" ];
         sansSerif = [ "Noto Sans" ];
         serif = [ "Noto Serif" ];
         emoji = [ "Noto Color Emoji" ];
@@ -197,17 +187,18 @@
   # ============================================================================
   # SYSTEM PACKAGES
   # ============================================================================
-  
+
   environment.systemPackages = with pkgs; [
     # Core utilities
     vim wget curl git htop btop
     unzip zip
-    
+
     # Wayland essentials
     wayland
     wayland-utils
     wl-clipboard
-    
+    xwayland-satellite  # XWayland support for JetBrains tools
+
     # Build tools
     gcc
     gnumake
