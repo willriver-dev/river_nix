@@ -5,46 +5,6 @@
   # ============================================================================
   # BOOT & KERNEL
   # ============================================================================
-  virtualisation.vmware.guest = {
-    enable = true;
-    headless = false;  # false cho desktop VM
-  };
-
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "vmware" ];
-    
-    # Desktop environment (chọn 1)
-    desktopManager.gnome.enable = true;
-    # hoặc
-    # desktopManager.xfce.enable = true;
-    
-    displayManager.gdm.enable = true;
-  };
-
-  fileSystems."/" = {
-    options = [ "noatime" "nodiratime" "discard" ];
-  };
-
-  # 11. Tắt services không cần thiết trong VM
-  services.bluetooth.enable = false;
-  services.printing.enable = false;  # trừ khi cần print
-  
-  # 12. Zram swap cho responsive tốt hơn
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50;
-  };
-  
-  # 13. Tối ưu kernel cho VM
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-    "vm.vfs_cache_pressure" = 50;
-  };
-  
-  # 14. Time sync với macOS host
-  services.timesyncd.enable = true;
 
   boot = {
     loader = {
@@ -68,8 +28,6 @@
       # Thêm ports nếu cần (VD: 8080 cho dev server)
       # allowedTCPPorts = [ 8080 ];
     };
-    useDHCP = false;
-    interfaces.ens160.useDHCP = true;  # VMware network interface
   };
 
   # ============================================================================
@@ -247,7 +205,6 @@ services.displayManager = {
   # ============================================================================
 
   environment.systemPackages = with pkgs; [
-    open-vm-tools
     # Core utilities
     hyprlock
     vim wget curl git htop btop
