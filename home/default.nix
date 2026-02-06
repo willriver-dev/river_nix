@@ -5,38 +5,30 @@
   # ============================================================================
   # IMPORTS - Modular Configuration
   # ============================================================================
-  
+
   imports = [
     # Desktop Environment
     ./noctalia.nix
     ./niri.nix
-    
-    # Editors
-    ./editors/helix.nix
-    ./editors/vim.nix
-    ./editors/vscode.nix
-    
-    # Terminals
-    ./terminals/alacritty.nix
-    ./terminals/kitty.nix
-    
-    # Shell & Tools
-    ./shell.nix
-    ./git.nix
-    ./cli-tools.nix
-    
+    ./swww.nix
     # Applications & Packages
     ./packages.nix
-    
+
     # System Integration
     ./xdg.nix
     ./systemd.nix
+    ./bash.nix
+    ./cli-tools.nix
+    ./theme.nix
+    ./starship.nix
+    # ./ca.nix
+    # ./ghostty.nix
   ];
 
   # ============================================================================
   # HOME MANAGER SETTINGS
   # ============================================================================
-  
+
   home = {
     username = "river";
     homeDirectory = "/home/river";

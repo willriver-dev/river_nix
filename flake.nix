@@ -24,7 +24,7 @@
     
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";  # ← Phải có /release-25.11
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
@@ -39,6 +39,8 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+      catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = { self, nixpkgs, home-manager, niri, noctalia, ... }@inputs: {
@@ -50,7 +52,7 @@
         # Main configuration files
         ./nixos/configuration.nix
         ./nixos/hardware-configuration.nix
-        
+        ./nixos/common.nix
         # Home Manager integration
         home-manager.nixosModules.home-manager
         {

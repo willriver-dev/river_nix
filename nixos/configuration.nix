@@ -5,13 +5,13 @@
   # ============================================================================
   # BOOT & KERNEL
   # ============================================================================
-  
+
   boot = {
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    
+
     # Use latest kernel for best Wayland support
     kernelPackages = pkgs.linuxPackages_latest;
   };
@@ -19,7 +19,7 @@
   # ============================================================================
   # NETWORKING
   # ============================================================================
-  
+
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;  # Required for Noctalia
@@ -33,11 +33,18 @@
   # ============================================================================
   # LOCALE & TIME
   # ============================================================================
-  
-  time.timeZone = "Asia/Ho_Chi_Minh";
-  
-  i18n.defaultLocale = "en_US.UTF-8";
 
+  time.timeZone = "Asia/Ho_Chi_Minh";
+
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-bamboo
+      fcitx5-gtk
+    ];
+  };
   # ============================================================================
   # NIX SETTINGS
   # ============================================================================
@@ -83,30 +90,38 @@
   # Niri compositor configured via home-manager (home/niri.nix)
   # programs.niri.enable = true;  # ← Moved to home-manager
 
-  # Display Manager - greetd with tuigreet (simple & stable for Wayland)
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
-        user = "greeter";
-      };
-    };
-  };
+  # ============================================================================
+# DISPLAY MANAGER - SDDM (Auto login to Niri)
+# ============================================================================
 
-  # XDG Desktop Portal (for screensharing, file picker, etc.)
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome  # For Niri screencasting
-    ];
-    wlr.enable = true;
-  };
+services.displayManager.sddm = {
+  enable = true;
+  wayland.enable = true;
+  
+  # QUAN TRỌNG: Dùng SDDM Qt6
+  package = pkgs.kdePackages.sddm;
+  
+  # Theme Astronaut
+  theme = "sddm-astronaut-theme";
+  
+  # Packages cần thiết cho Qt6
+  extraPackages = with pkgs; [
+    kdePackages.qtsvg
+    kdePackages.qtmultimedia
+    kdePackages.qtvirtualkeyboard
+    sddm-astronaut  # Theme package
+  ];
+};
+
+# Session mặc định
+services.displayManager = {
+  defaultSession = "niri";
+  sessionPackages = [ pkgs.niri ];
+};
 
   # XWayland support (required for JetBrains tools)
   programs.xwayland.enable = true;
-
+  programs.dconf.enable = true;
   # ============================================================================
   # HARDWARE & SERVICES
   # ============================================================================
@@ -184,12 +199,14 @@
     };
   };
 
+
   # ============================================================================
   # SYSTEM PACKAGES
   # ============================================================================
 
   environment.systemPackages = with pkgs; [
     # Core utilities
+    hyprlock
     vim wget curl git htop btop
     unzip zip
 
@@ -199,67 +216,80 @@
     wl-clipboard
     xwayland-satellite  # XWayland support for JetBrains tools
 
+
+    jetbrains.goland
+    jetbrains.datagrip
     # Build tools
     gcc
     gnumake
     pkg-config
-    
+
     # Niri utilities
-    fuzzel              # App launcher (Wayland native)
     mako                # Notification daemon
-    swaylock            # Screen locker
     grim                # Screenshot utility
     slurp               # Region selector for screenshots
-    
+
     # File manager
     xfce.thunar
     xfce.thunar-volman
-    
+
     # Network tools
     networkmanagerapplet
-    
+
     # System monitoring
     pavucontrol         # Audio control
     blueman             # Bluetooth manager
-    
+
     # Terminal emulators (base install)
     alacritty
     kitty
+    ghostty
+    sddm-astronaut
+    kdePackages.qtmultimedia
+
+    tela-icon-theme
+    adwaita-icon-theme
+    networkmanagerapplet
   ];
 
   # ============================================================================
   # USERS
   # ============================================================================
-  
+
   users.users.river = {
     isNormalUser = true;
     description = "River";
-    extraGroups = [ 
+    extraGroups = [
       "wheel"           # sudo
       "networkmanager"  # network configuration
       "docker"          # docker access
       "video"           # video devices
       "audio"           # audio devices
+      "networkmanager"
     ];
     shell = pkgs.bash;
     # Set initial password (change after first login!)
     initialPassword = "nixos";
   };
 
+  programs.nm-applet.enable = true;
   # ============================================================================
   # SECURITY & SUDO
   # ============================================================================
-  
+
   security = {
     sudo.wheelNeedsPassword = true;
     polkit.enable = true;
-    rtkit.enable = true;  # RealtimeKit for audio
+    rtkit.enable = true;
+
+    # PAM cho hyprlock
+    pam.services.hyprlock = {};  # ← ĐẶT Ở ĐÂY
   };
 
   # ============================================================================
   # SERVICES
   # ============================================================================
-  
+
   services = {
     # SSH (optional, useful for remote management)
     openssh = {
@@ -269,27 +299,34 @@
         PasswordAuthentication = true;
       };
     };
-    
+
     # D-Bus
     dbus.enable = true;
-    
+
     # Printing (optional)
     printing.enable = false;  # Set to true if needed
   };
 
+    environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+    "/share/icons"  # ← THÊM dòng này
+    "/share/pixmaps"  # ← THÊM dòng này
+  ];
+
   # ============================================================================
   # ENVIRONMENT VARIABLES
   # ============================================================================
-  
+
   environment.sessionVariables = {
     # Wayland environment
     NIXOS_OZONE_WL = "1";  # Electron/Chromium apps use Wayland
     MOZ_ENABLE_WAYLAND = "1";  # Firefox Wayland
-    
+
     # Qt Wayland
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    
+
     # Editor
     EDITOR = "hx";  # Helix
     VISUAL = "hx";
@@ -298,7 +335,7 @@
   # ============================================================================
   # SYSTEM STATE VERSION
   # ============================================================================
-  
+
   # NixOS release version for compatibility
   system.stateVersion = "25.11";
 }

@@ -1,0 +1,22 @@
+# Certificates - không đẩy lên git
+certs/
+*.crt
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Nix build artifacts
+result
+result-*
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

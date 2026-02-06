@@ -13,16 +13,13 @@
     settings = {
       bar = {
         density = "compact";      # Options: compact, normal, spacious
-        position = "bottom";      # Options: top, bottom
+        position = "top";      # Options: top, bottom
+        type = "floating";
       };
       
       colorSchemes = {
         predefinedScheme = "Catppuccin Mocha";
         # Other options: Catppuccin Latte, Nord, Gruvbox, Dracula, Tokyo Night
-      };
-      
-      general = {
-        radiusRatio = 0.2;       # Border radius
       };
       
       # Enable widgets
@@ -34,6 +31,10 @@
         tray.enable = true;
         clock.enable = true;
       };
+
+      wallpaper = {
+      enabled = false;  # Tắt wallpaper management
+    };
     };
   };
 }
